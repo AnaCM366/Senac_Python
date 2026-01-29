@@ -1,0 +1,31 @@
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body>
+    <h1>Lista de Chamados</h1>
+    {% for c in chamados %}
+    <b>{{ c.lab }}</b>
+    {% if c.prioridade == "Alta" %}
+    <button class="btn btn-danger" type="button" class="btn">{{ c.problema }}</button>
+    {% elif c.prioridade == "Média" %}
+    <button class="btn btn-warning" type="button" class="btn">{{ c.problema }}</button>
+    {% else %}
+    <button class="btn btn-primary" type="button" class="btn">{{ c.problema }}</button>
+    {% endif %}
+
+    <!-- <table class="table">
+        <tbody>
+            <tr>
+                <td>{{ c.problema }}</td>
+                <td>{{ c.prioridade }}</td>
+                <td>{{ c.lab }}</td>
+            </tr>
+        </tbody>
+    </table> -->
+    {% endfor %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>

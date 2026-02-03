@@ -1,26 +1,55 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+# from .models import Chamado
+from django.contrib.auth.decorators import login_required
 
-# Nossa lista global (Banco de Dados em memória)
 chamados = [
-    {"lab": "Lab 01", "problema": "PC lento", "prioridade": "Média"},
+    {"id": 1, "laboratorio": "Lab 01", "problema": "Computador não liga", "prioridade": "Alta", "data_criacao": "2024-01-10 14:30"},
+    {"id": 2, "laboratorio": "Lab 02", "problema": "Internet lenta", "prioridade": "Média", "data_criacao": "2024-01-11 09:15"},
+    {"id": 3, "laboratorio": "Lab 03", "problema": "Impressora sem tinta", "prioridade": "Baixa", "data_criacao": "2024-01-12 11:45"},
 ]
+
+categorias = [
+    {"id": 1, "nome": "Hardware"},
+    {"id": 2, "nome": "Software"},
+    {"id": 3, "nome": "Rede"},
+]
+
 def home(request):
-    return render(request, "core/home.html")
+    return render(request, "core/home.html" ) 
 
+#@login_required
+def novoChamado(request):
+    if request.method == "POST":
+        laboratorio = request.POST.get('laboratorio')
+        problema = request.POST.get('problema')
+        prioridade = request.POST.get('prioridade')
+
+        print("chegou um post")
+        print(f"Laboratório: {laboratorio}, Descrição: {problema}")
+
+        # Chamado.objects.create(laboratorio=laboratorio, problema=problema, prioridade=prioridade)
+        
+       
+        return redirect('/listar')
+
+    if request.method == "GET":
+        print("chegou um get")
+        return render(request, 'core/novo_chamado.html')
+
+# Ainda retorna HttpResponse
+def fechar_chamado(request, id):
+    # chamado = Chamado.objects.get(id=id)
+    # chamado.delete()
+    # print(f"Fechando chamado {chamado.id} - {chamado.problema}")
+    return HttpResponse(f"✅ Chamado removido com sucesso! <br> <a href='/listar'>Voltar</a>")
+
+
+def listar_categorias(request):
+    return render(request, "core/categorias.html", {"categorias": categorias})
+
+#@login_required
 def listar(request):
-    return render(request, "core/listar.html", {"chamados": chamados})
-
-def criar(request, lab, problema, prioridade):
-    # Criando o dicionário e adicionando à lista
-    novo = {
-        "lab": lab,
-        "problema": problema,
-        "prioridade": prioridade
-    }
-    chamados.append(novo)
-
-    return HttpResponse(f"<h1>Chamado para o {lab} criado com sucesso!</h1> <br> <a href='/'>Voltar</a>")
-
-def novo_chamado(request):
-    return render(request, "core/novoChamado.html")
+    # Busca TODOS os registros do banco de dados
+    # chamados = Chamado.objects.all() 
+    return render(request, 'core/listar.html', {"chamados": chamados})

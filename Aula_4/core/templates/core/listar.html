@@ -1,31 +1,45 @@
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-</head>
+{% extends "core/base.html" %}
 
-<body>
-    <h1>Lista de Chamados</h1>
-    {% for c in chamados %}
-    <b>{{ c.lab }}</b>
-    {% if c.prioridade == "Alta" %}
-    <button class="btn btn-danger" type="button" class="btn">{{ c.problema }}</button>
-    {% elif c.prioridade == "Média" %}
-    <button class="btn btn-warning" type="button" class="btn">{{ c.problema }}</button>
-    {% else %}
-    <button class="btn btn-primary" type="button" class="btn">{{ c.problema }}</button>
-    {% endif %}
+{% block titulo %}
+Listar
+{% endblock %}
 
-    <!-- <table class="table">
-        <tbody>
+{% block conteudo %}
+<div class="container py-5">
+    <h1 class="text-primary mb-4">Lista de Chamados</h1>
+
+    <table class="table table-striped table-hover shadow-sm bg-white">
+        <thead class="table-dark">
             <tr>
-                <td>{{ c.problema }}</td>
-                <td>{{ c.prioridade }}</td>
-                <td>{{ c.lab }}</td>
+                <th>Laboratório</th>
+                <th>Problema</th>
+                <th>Prioridade</th>
+                <th>Ação</th>
             </tr>
+        </thead>
+        <tbody>
+            {% for chamado in chamados %}
+            <tr>
+                <td>{{ chamado.laboratorio }}</td>
+                <td>{{ chamado.problema }}</td>
+                <td>
+                    {% if chamado.prioridade == "Alta" %}
+                    <span class="badge bg-danger">{{ chamado.prioridade }}</span>
+                    {% elif chamado.prioridade == "Média" %}
+                    <span class="badge bg-warning">{{ chamado.prioridade }}</span>
+                    {% else %}
+                    <span class="badge bg-primary">{{ chamado.prioridade }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'fechar-chamado' chamado.id %}" class="btn btn-danger btn-sm"
+                        onclick="return confirm('Tem certeza que deseja apagar?')">
+                        Fechar Chamado
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
         </tbody>
-    </table> -->
-    {% endfor %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-</body>
+    </table>
+</div>
+{% endblock %}

@@ -26,12 +26,16 @@
             <p class="lead">Seu sistema de HelpDesk agora tem uma interface moderna.</p>
         </div>
     </header>
-    {% block conteudo %}{% endblock %}
 
+    {% block content %}
+    <div>BEM-VINDO do bloco content</div>
+    {% endblock %}
+
+    {% block conteudo %}
     <footer class="text-center py-4 text-muted">
         <small>&copy; 2026 - Curso Técnico de Desenvolvimento Web</small>
     </footer>
-
+    {% endblock %}
 </body>
 
 </html>

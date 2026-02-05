@@ -1,5 +1,6 @@
 {% extends "core/base.html" %}
-{% block conteudo %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -27,9 +28,10 @@
 
                         <div class="d-grid gap-2 d-md-block">
                             <a href="/" class="btn btn-primary btn-lg px-4">Atualizar Página</a>
-                            <a href="/listar" class="btn btn-outline-secondary btn-lg px-4">Lista de chamados</a>
-                            <a href="/categorias" class="btn btn-outline-secondary btn-lg px-4">Categorias</a>
-                            <a href="/novoChamado" class="btn btn-outline-secondary btn-lg px-4">Novo chamado</a>
+                            <a href="/listar-chamados" class="btn btn-outline-secondary btn-lg px-4">Lista de
+                                chamados</a>
+                            <a href="/listar-categorias" class="btn btn-outline-secondary btn-lg px-4">Categorias</a>
+                            <a href="/novo-chamado" class="btn btn-outline-secondary btn-lg px-4">Novo chamado</a>
                         </div>
                     </div>
                 </div>
@@ -37,7 +39,13 @@
         </div>
     </main>
 
+    {% endblock %}
 
+    {% block rodape%}
+
+    <div class="text-center py-4 text-muted">
+        <small>&copy; 2026 - Curso Técnico de Desenvolvimento Web - Rodapé Personalizado</small>
+    </div>
 </body>
 
 </html>

@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 # from .models import Chamado
 from django.contrib.auth.decorators import login_required
 
+from .models import Categoria
+
 chamados = [
     {"id": 1, "laboratorio": "Lab 01", "problema": "Computador não liga", "prioridade": "Alta", "data_criacao": "2024-01-10 14:30"},
     {"id": 2, "laboratorio": "Lab 02", "problema": "Internet lenta", "prioridade": "Média", "data_criacao": "2024-01-11 09:15"},
@@ -72,6 +74,15 @@ def nova_categoria(request):
         return redirect('/listar-categorias')
     return render(request, 'core/nova_categoria.html')
 
+def editar_categoria(request, id):
+    categoria = Categoria.objects.get(id=id)
+
+    if request.method == "POST":
+        categoria.nome = request.POST.get('nome')
+        categoria.save()
+        return redirect('/lista_categorias')
+    if request.method == "GET":
+        return render(request, "core/editar_categoria.html", {"categoria": categoria})
 
 def excluir_categoria(request, id):
     for categoria in categorias:
